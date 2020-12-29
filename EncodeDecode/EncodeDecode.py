@@ -1,31 +1,80 @@
-class encryption:
-    def encrypt(self, message, key):
-        message_list = message.split(" ")
-        result = ""
-        for i in message_list:
-            result_temp = ''.join(chr(ord(j) + key) for j in i)
-            result = result + " "
-            result = result + result_temp
-        return result
+from tkinter import *
 
-    def decrypt(self, message, key):
-        message_list = message.split(" ")
-        result = " "
+
+def popupmsg(msg):
+    popup = Tk()
+    popup.configure(background="light blue")
+    popup.wm_title("!")
+    label = Label(popup, text=msg)
+    label.pack(side="top", fill="x", pady=10, bg="light blue")
+    B1 = Button(popup, text="Okay", command=popup.destroy, bg="light Green")
+    B1.pack()
+    popup.mainloop()
+
+def submit():
+    message1 = entry_1.get()
+    key1 = int(entry_2.get())
+    message_list = message1.split(" ")
+    result = ""
+
+    if CheckVar1.get() == 1 and CheckVar2.get() == 0:
         for i in message_list:
-            result_temp = ''.join(chr(ord(j)+key) for j in i)
+            result_temp = ''.join(chr(ord(j) + key1) for j in i)
             result = result + " "
             result = result + result_temp
-        return result
-if __name__ == "__main__":
-    E = encryption()
-    choice = int(input(print("Enter 1 for encryption or 2 for decryption")))
-    if choice == 1:
-        message = input(print("Enter the message to be encrypted"))
-        key = int(input(print("Enter the Key!")))
-        result = E.encrypt(message, key)
-        print("Encrypted Message is ", result)
-    elif choice == 2:
-        message = input(print("Enter the message to be decrypted"))
-        key = int(input(print("Enter the key!")))
-        result = E.decrypt(message, key)
-        print("Decrypted Message is ", result)
+    elif CheckVar1.get() == 0 and CheckVar2.get() == 1:
+        for i in message_list:
+            result_temp = ''.join(chr(ord(j) + key1) for j in i)
+            result = result + " "
+            result = result + result_temp
+    else:
+        popupmsg("Please Select only 1!")
+    label_message = Label(top, text=result, font=('calibre', 10, 'normal'),
+                          bg="light blue")
+    label_message.place(relx=0.47, rely=0.7)
+    return result
+
+
+top = Tk()
+top.title("Message Encode Decode")
+top.configure(backgroun="light blue")
+top.resizable(False, False)
+
+
+message = StringVar()
+key = IntVar()
+top.geometry("400x200")
+# label for username
+label_input = Label(top, text="Enter the Message to be Encrypted", bg="light blue")
+entry_1 = Entry(top, textvariable=message,
+                font=('calibre', 10, 'normal'))
+
+# label for key
+label_key = Label(top, text="Enter the key", bg="light blue")
+entry_2 = Entry(top, textvariable=key,
+                font=('calibre', 10, 'normal'))
+
+# creating the checkbox for the Encrypt and decrypt option
+CheckVar1 = IntVar()
+CheckVar2 = IntVar()
+C1 = Checkbutton(top, text="Encrypt", variable=CheckVar1, bg="light blue",
+                 onvalue=1, offvalue=0, height=2)
+C2 = Checkbutton(top, text="Decrypt", variable=CheckVar2, bg="light blue",
+                 onvalue=1, offvalue=0, height=2)
+
+# Submit Button
+submit_button = Button(top, text="Submit", bg="light Green",
+                       width=20, command=submit, padx=5, pady=5)
+
+label_input.grid(row=0, column=0)
+entry_1.grid(row=0, column=1)
+label_key.grid(row=1, column=0)
+entry_2.grid(row=1, column=1)
+C1.grid(row=2, column=0)
+C2.grid(row=2, column=1)
+submit_button.place(relx=0.3, rely=0.4)
+
+label_output = Label(top, text="The message after operation is ", bg="light blue")
+label_output.place(relx=0.03, rely=0.7)
+
+top.mainloop()
