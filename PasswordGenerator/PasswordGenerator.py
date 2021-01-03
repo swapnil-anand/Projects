@@ -37,7 +37,10 @@ def generate():
     else:
         popup_window("Please choose anyone of the two message")
 
-    output = Label(top, text=str, bg="light blue")
+    string = list(str)
+    random.shuffle(string)
+
+    output = Label(top, text=''.join(string), bg="light blue")
     output.grid(row=1, column=1)
 
 def popup_window(msg):
