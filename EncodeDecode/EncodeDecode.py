@@ -3,12 +3,14 @@ from tkinter import *
 
 def popupmsg(msg):
     popup = Tk()
+    popup.title("Error 002!")
     popup.configure(background="light blue")
-    popup.wm_title("!")
-    label = Label(popup, text=msg)
-    label.pack(side="top", fill="x", pady=10, bg="light blue")
-    B1 = Button(popup, text="Okay", command=popup.destroy, bg="light Green")
-    B1.pack()
+    popup.resizable(False, False)
+    popup.geometry("400x100")
+    message_label = Label(popup, text=msg, bg="light blue", )
+    message_label.place(relx=0.5, rely=0.5, anchor="center")
+    okay_button = Button(popup, text="Okay", command=popup.destroy, bg="light Green")
+    okay_button.place(relx=0.45, rely=0.7)
     popup.mainloop()
 
 def submit():
@@ -24,7 +26,7 @@ def submit():
             result = result + result_temp
     elif CheckVar1.get() == 0 and CheckVar2.get() == 1:
         for i in message_list:
-            result_temp = ''.join(chr(ord(j) + key1) for j in i)
+            result_temp = ''.join(chr(ord(j) - key1) for j in i)
             result = result + " "
             result = result + result_temp
     else:
