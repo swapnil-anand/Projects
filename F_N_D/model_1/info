@@ -1,0 +1,4 @@
+voc_size = 30000
+sent_length = 100
+
+trained on 20800 sample and achieved accuracy of 85% on unknown samples
